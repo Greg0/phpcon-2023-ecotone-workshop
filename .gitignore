@@ -1,0 +1,6 @@
+*/vendor
+config.json
+.htaccess
+*/cache
+*/.phpunit.result.cache
+*/.phpunit.cache
