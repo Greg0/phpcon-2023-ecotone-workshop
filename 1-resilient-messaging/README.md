@@ -28,4 +28,4 @@ Zadanie zostanie zakończone sukcesem gdy nie wystąpi żaden błąd podczas wyw
 ### Podpowiedzi
 
 1, 2. [Event Handling and Publishing](https://docs.ecotone.tech/modelling/command-handling/external-command-handlers/event-handling#handling-events)
-3, 4. [Asynchronous Message Processing](https://docs.ecotone.tech/modelling/asynchronous-handling#running-asynchronously)
+4, 5. [Asynchronous Message Processing](https://docs.ecotone.tech/modelling/asynchronous-handling#running-asynchronously)
