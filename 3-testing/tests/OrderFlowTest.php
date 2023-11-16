@@ -46,7 +46,7 @@ final class OrderFlowTest extends TestCase
         );
 
         $ecotoneLite->sendCommand(new PlaceOrder($orderId, 'milk'));
-        /** @TODO Anuluj zamówienie */
+        $ecotoneLite->sendCommandWithRoutingKey('order.cancel', metadata: ['aggregate.id' => $orderId]);
 
         $this->assertTrue(
             $ecotoneLite
