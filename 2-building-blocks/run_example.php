@@ -34,11 +34,7 @@ try {
     $ecotoneLite->getCommandBus()->send(new PlaceOrder($orderId, $productId));
     comment("Zamówienie złożone");
     comment('Anuluje zamówienie...');
-    try {
-        $ecotoneLite->getCommandBus()->send(new CancelOrder($orderId));
-    }catch (DestinationResolutionException) {
-        $ecotoneLite->getCommandBus()->sendWithRouting('order.cancel', metadata: ['aggregate.id' => $orderId]);
-    }
+    $ecotoneLite->getCommandBus()->sendWithRouting('order.cancel', metadata: ['aggregate.id' => $orderId]);
     comment('Zamówienie zostało anulowane');
 
     comment('Sprawdzam czy stan magazynowy się zgadza...');
