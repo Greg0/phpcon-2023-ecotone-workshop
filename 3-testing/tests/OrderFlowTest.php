@@ -82,12 +82,13 @@ final class OrderFlowTest extends TestCase
      */
     public function test_sending_notification_when_order_was_placed(): void
     {
+        $orderId = Uuid::uuid4()->toString();
         $ecotoneLite = EcotoneLite::bootstrapFlowTesting(
             [NotificationService::class],
             [new NotificationService()],
         );
 
-        /** @TODO Opublikuj zdarzenie złożenia zamówienia */
+        $ecotoneLite->publishEvent(new OrderWasPlaced($orderId));
 
         $this->assertTrue(
             $ecotoneLite
