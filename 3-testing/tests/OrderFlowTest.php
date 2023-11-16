@@ -104,8 +104,7 @@ final class OrderFlowTest extends TestCase
     {
         $orderId = Uuid::uuid4()->toString();
         $ecotoneLite = EcotoneLite::bootstrapFlowTesting(
-            /** @TODO Popraw konfigurację */
-            [],
+            [Order::class, NotificationService::class],
             [new NotificationService()],
         );
 
