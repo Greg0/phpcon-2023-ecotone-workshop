@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Domain\Order;
 
+use App\Domain\Order\Event\OrderWasCancelled;
 use Doctrine\ORM\Mapping as ORM;
 use Ecotone\Modelling\Attribute\Aggregate;
+use Ecotone\Modelling\Attribute\CommandHandler;
 use Ecotone\Modelling\Attribute\Identifier;
 use Ecotone\Modelling\WithEvents;
 
@@ -39,9 +41,11 @@ final class Order
         return new self($orderId, $productId);
     }
 
+    #[CommandHandler(routingKey: 'order.cancel')]
     public function cancel(): void
     {
         $this->isCancelled = true;
+        $this->recordThat(new OrderWasCancelled($this->orderId, $this->productId));
     }
 
     public function productId(): string

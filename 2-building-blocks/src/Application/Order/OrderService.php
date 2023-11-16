@@ -25,16 +25,4 @@ final class OrderService
 
         $eventBus->publish(new OrderWasPlaced($placeOrder->orderId, $placeOrder->productId));
     }
-
-    #[CommandHandler]
-    public function cancelOrder(
-        CancelOrder $command, OrderRepository $orderRepository,
-        EventBus $eventBus
-    ) {
-        $order = $orderRepository->get($command->orderId);
-        $order->cancel();
-        $orderRepository->save($order);
-
-        $eventBus->publish(new OrderWasCancelled($command->orderId, $order->productId()));
-    }
 }
