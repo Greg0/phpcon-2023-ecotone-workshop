@@ -159,7 +159,7 @@ final class OrderFlowTest extends TestCase
         );
 
         $ecotoneLite->sendCommand(new PlaceOrder($orderId, 'milk'));
-        /** @TODO Uruchom Message Consumer'a i przetwórz wiadomość asynchronicznie */
+        $ecotoneLite->run('notifications');
 
         $this->assertTrue(
             $ecotoneLite
