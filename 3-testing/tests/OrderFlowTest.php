@@ -9,6 +9,7 @@ use App\Domain\Event\OrderWasPlaced;
 use App\Domain\NotificationService;
 use App\Domain\Order;
 use Ecotone\Lite\EcotoneLite;
+use Ecotone\Messaging\Channel\QueueChannel;
 use Ecotone\Messaging\Channel\SimpleMessageChannelBuilder;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
@@ -127,7 +128,11 @@ final class OrderFlowTest extends TestCase
         $ecotoneLite = EcotoneLite::bootstrapFlowTesting(
             [Order::class, NotificationService::class],
             [new NotificationService()],
-            /** @TODO Uzupełnij konfigurację */
+            enableAsynchronousProcessing: [
+                SimpleMessageChannelBuilder::create('notifications',
+                    QueueChannel::create('notifications')
+                ),
+            ]
         );
 
         $ecotoneLite->sendCommand(new PlaceOrder($orderId, "milk"));
