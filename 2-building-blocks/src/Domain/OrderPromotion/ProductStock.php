@@ -7,6 +7,7 @@ namespace App\Domain\OrderPromotion;
 use Doctrine\ORM\Mapping as ORM;
 use Ecotone\Modelling\Attribute\Aggregate;
 use Ecotone\Modelling\Attribute\CommandHandler;
+use Ecotone\Modelling\Attribute\EventHandler;
 use Ecotone\Modelling\Attribute\Identifier;
 use Ecotone\Modelling\Attribute\QueryHandler;
 
@@ -36,11 +37,13 @@ final class ProductStock
         return new self($command->productId, $command->quantity);
     }
 
+    #[EventHandler(listenTo: 'order.cancelled')]
     public function increaseStock(): void
     {
         $this->productStockCount++;
     }
 
+    #[EventHandler(listenTo: 'order.placed')]
     public function decreaseStock(): void
     {
         $this->productStockCount--;
