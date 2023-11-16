@@ -68,8 +68,7 @@ final class OrderFlowTest extends TestCase
         $ecotoneLite
             ->sendCommand(new PlaceOrder($orderId, 'milk'));
 
-        /** @TODO Pobierz opublikowane Eventy */
-        $recordedEvents = [];
+        $recordedEvents = $ecotoneLite->getRecordedEvents();
 
         $this->assertEquals(
             [new OrderWasPlaced($orderId)],
