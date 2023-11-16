@@ -8,6 +8,7 @@ use App\Application\Order\PlaceOrder;
 use App\Domain\Order\Event\OrderWasCancelled;
 use App\Domain\Order\Event\OrderWasPlaced;
 use Doctrine\ORM\Mapping as ORM;
+use Ecotone\Messaging\Attribute\Parameter\Payload;
 use Ecotone\Modelling\Attribute\Aggregate;
 use Ecotone\Modelling\Attribute\CommandHandler;
 use Ecotone\Modelling\Attribute\Identifier;
@@ -39,10 +40,13 @@ final class Order
         $this->recordThat(new OrderWasPlaced($this->orderId, $this->productId));
     }
 
-    #[CommandHandler]
-    public static function create(PlaceOrder $cmd): self
+    #[CommandHandler(routingKey: 'order.place')]
+    public static function create(
+        #[Payload(expression: 'payload.orderId')] string $orderId,
+        #[Payload(expression: 'payload.productId')]string $productId
+    ): self
     {
-        return new self($cmd->orderId, $cmd->productId);
+        return new self($orderId, $productId);
     }
 
     #[CommandHandler(routingKey: 'order.cancel')]

@@ -30,8 +30,8 @@ try {
     $ecotoneLite->getCommandBus()->send(new RegisterProduct($productId, 10));
 
     comment("Składam zamówienie...");
-    $ecotoneLite->getCommandBus()->send(new PlaceOrder(Uuid::uuid4()->toString(), $productId));
-    $ecotoneLite->getCommandBus()->send(new PlaceOrder($orderId, $productId));
+    $ecotoneLite->getCommandBus()->sendWithRouting('order.place', new PlaceOrder(Uuid::uuid4()->toString(), $productId));
+    $ecotoneLite->getCommandBus()->sendWithRouting('order.place', new PlaceOrder($orderId, $productId));
     comment("Zamówienie złożone");
     comment('Anuluje zamówienie...');
     $ecotoneLite->getCommandBus()->sendWithRouting('order.cancel', metadata: ['aggregate.id' => $orderId]);

@@ -18,7 +18,8 @@
         "ecotone/lite-dbal-starter": "1.0.1",
         "ecotone/open-telemetry": "^1.204",
         "open-telemetry/exporter-otlp": "^1.0",
-        "open-telemetry/transport-grpc": "^1.0"
+        "open-telemetry/transport-grpc": "^1.0",
+        "symfony/expression-language": "^6.3"
     },
     "require-dev": {
         "phpunit/phpunit": "^10.0"
