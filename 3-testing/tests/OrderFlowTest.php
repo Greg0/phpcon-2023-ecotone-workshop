@@ -21,11 +21,13 @@ final class OrderFlowTest extends TestCase
     public function test_placing_an_order(): void
     {
         $orderId = Uuid::uuid4()->toString();
+        $productName = 'Test product';
         $ecotoneLite = EcotoneLite::bootstrapFlowTesting(
             [Order::class]
         );
 
-        /** @TODO Złóż nowe zamówienie */
+
+        $ecotoneLite->sendCommand(new PlaceOrder($orderId, $productName));
 
         $this->assertNotNull(
             $ecotoneLite->getAggregate(Order::class, $orderId),
